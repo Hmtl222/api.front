@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMTApp</title>
+</head>
+<body>
+    <style>
+         body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYjLcbMVF1tp87NLwKVZYHAUKBMMHq3XGsUqLwqmG1xCVHyHFHsfTDvV_irCuCFs8PFPk&usqp=CAU");
+}
+
+.container {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 300px;
+  width: 100%;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  width: calc(100% - 10px);
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+#result {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #555;
+}
+    </style>
+    <div class="container">
+        <h1>Калькулятор ИМТ</h1>
+        <form id="bmi-form">
+            <label for="height">Рост:  (см)</label>
+            <input type="number" id="height" placeholder="Введите свой рост:" required>
+
+            <label for="weight">Вес: (кг)</label>
+             <input type="number" id="weight" placeholder="Введите свой вес:" required>
+             <button type="submit">Рассчитать</button>
+        </form>
+    </div>
+    <div id="result"></div>
+</div>
+<script src="script.js"></script>
+<script>
+  document.getElementById('bmi-form').addEventListener('submit', function(event) {
+event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+const height = parseFloat(document.getElementById('height').value) / 100; // Переводим в метры
+const weight = parseFloat(document.getElementById('weight').value);
+
+if (height > 0 && weight > 0) {
+  const bmi = (weight / (height * height)).toFixed(2);
+  let category;
+
+  if (bmi < 18.5) {
+    category = 'Недостаточный вес';
+  } else if (bmi >= 18.5 && bmi < 24.9) {
+    category = 'Нормальный вес';
+  } else if (bmi >= 25 && bmi < 29.9) {
+    category = 'Избыточный вес';
+  } else {
+    category = 'Ожирение';
+  }
+
+  document.getElementById('result').innerHTML = `
+    <p>Ваш ИМТ: <strong>${bmi}</strong></p>
+    <p>Категория: <strong>${category}</strong></p>
+  `;
+} else {
+  document.getElementById('result').innerText = 'Пожалуйста, введите корректные данные.';
+}
+});
+
+</script>
+</body>
+</html>
+
+</body>
+</html>
