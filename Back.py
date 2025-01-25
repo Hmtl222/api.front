@@ -1,5 +1,35 @@
-from string import printable
 
+
+            const filePromises = files.map(file => {
+                if (file.endsWith('.mp4') || file.endsWith('.avi') || file.endsWith('.mov')) {
+                    const inputPath = path.join(videosDir, file);
+                    const outputPath = path.join(audiosDir, `${path.basename(file, path.extname(file))}.mp3`);
+
+                    return new Promise((resolve, reject) => {
+                        ffmpeg(inputPath)
+                            .outputOptions('-vn', '-ab', '128k', '-ar', '44100')
+                            .toFormat('mp3')
+                            .save(outputPath)
+                            .on('error', (err) => reject(`Error converting file: ${err}`))
+                            .on('end', () => {
+                                result.push(outputPath);
+                                resolve(result);
+                            });
+                    });
+                }
+                return Promise.resolve();
+            });
+
+            Promise.all(filePromises).then(() => resolve(result));
+        });
+    });
+
+    const convertedAudios: string[] = await promises;
+
+    if (convertedAudios.length === 0) throw new Error(`В этой директории нет видеофайлов: ${videosDir}`);
+
+    return convertedAudios;
+}
 
 for a1 in printable:
     for a2 in printable:
@@ -74,5 +104,4 @@ print(min(list_2))
 print(sum(list_2))
 age2 = int(input("your age:"))
 name3 = input("your name:")
-print(age2)
-print(name3)
+print(age
